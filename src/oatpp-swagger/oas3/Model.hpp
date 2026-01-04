@@ -710,7 +710,7 @@ class PathItemOperation : public oatpp::DTO {
   /**
    * List of tags.
    */
-  DTO_FIELD(List<Tag>, tags);
+  DTO_FIELD(List<String>, tags);
 
   /**
    * Map of &id:oatpp::String; to &l:OperationResponse;.
@@ -824,6 +824,11 @@ class Document : public oatpp::DTO {
    * Map of &id:oatpp::String; to &l:PathItem;.
    */
   DTO_FIELD(Fields<Object<PathItem>>, paths);
+
+  /**
+   * List of Tags
+   */
+  DTO_FIELD(List<Object<Tag>>, tags);
 
   /**
    * &l:Components;.
