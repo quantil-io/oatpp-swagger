@@ -355,34 +355,63 @@ class Schema : public oatpp::DTO {
 /**
  * Tag
  */
+class ExternalDocumentation : public oatpp::DTO {
+    DTO_INIT(ExternalDocumentation, DTO)
+
+    /**
+     * A description of the target documentation. CommonMark syntax MAY be used for rich text representation.
+     */
+    DTO_FIELD(String, description);
+
+    /**
+     * REQUIRED. The URI for the target documentation. This MUST be in the form of a URI.
+     */
+    DTO_FIELD(String, url);
+
+};
+
+
+/**
+ * Tag
+ */
 class Tag : public oatpp::DTO {
     DTO_INIT(Tag, DTO)
 
     /**
-     * Name of tag.
+     * REQUIRED. The name of the tag.
      */
     DTO_FIELD(String, name);
 
     /**
-     * Name of tag.
+     * A description for the tag. CommonMark syntax MAY be used for rich text representation.
      */
-    DTO_FIELD(String, displayName);
+    DTO_FIELD(String, description);
 
     /**
-     * Summary.
+     * Additional external documentation for this tag.
      */
-    DTO_FIELD(String, summary);
+    DTO_FIELD(Object<ExternalDocumentation>, externalDocs);
 
 
     /**
-     * URL.
+     * Create Contact from &id:oatpp::swagger::Tag;.
+     * @param model - &id:oatpp::swagger::Tag;
+     * @return - Contact.
      */
-    DTO_FIELD(String, url);
-
-    /**
-     * Link Name
-     */
-    DTO_FIELD(String, urlName);
+    static Wrapper createFromBaseModel(const std::shared_ptr<oatpp::swagger::Tag>& tag) {
+        if(tag) {
+            auto result = createShared();
+            result->name = tag->name;
+            result->description = tag->description;
+            if(tag->externalDocs) {
+                result->externalDocs = ExternalDocumentation::createShared();
+                result->externalDocs->description = tag->externalDocs->description;
+                result->externalDocs->url = tag->externalDocs->url;
+            }
+            return result;
+        }
+        return nullptr;
+    }
 
 
 };
