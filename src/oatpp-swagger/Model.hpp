@@ -387,6 +387,9 @@ public:
    */
    std::shared_ptr<std::unordered_map<oatpp::String, std::shared_ptr<SecurityScheme>>> securitySchemes;
 
+
+   std::shared_ptr<std::list<std::shared_ptr<Tag>>>  tags;
+
   /**
    * SecurityScheme Builder.
    */
@@ -656,6 +659,7 @@ public:
     
     std::shared_ptr<DocumentHeader> m_header;
     std::shared_ptr<std::list<std::shared_ptr<Server>>> m_servers;
+    std::shared_ptr<std::list<std::shared_ptr<Tag>>> m_tags;
     std::shared_ptr<std::unordered_map<oatpp::String, std::shared_ptr<SecurityScheme>>> m_securitySchemes;
 
   private:
@@ -809,6 +813,35 @@ public:
     }
 
     /**
+     * Add rich tag data
+     * @param name
+     * @param description
+     * @param documentationDescription
+     * @param documentationUrl
+     * @return - &l:DocumentInfo::Builder;.
+     */
+    Builder& addTag(const oatpp::String& name,
+                    const oatpp::String& description = "",
+                    const oatpp::String& title = "",
+                    const oatpp::String& url = "") {
+        auto tag = Tag::createShared();
+        tag->name = name;
+        tag->description = description;
+
+        if(!title->empty() && !url->empty()) {
+            tag->externalDocs = ExternalDocumentation::createShared();
+            tag->externalDocs->description = title;
+            tag->externalDocs->url = url;
+        }
+
+        if(!m_tags) {
+            m_tags = std::make_shared<std::list<std::shared_ptr<Tag>>>();
+        }
+        m_tags->push_back(tag);
+        return *this;
+    }
+
+    /**
      * Add &l:SecurityScheme;.
      * When you are using the `AUTHENTICATION()` Endpoint-Macro you must add an [SecurityScheme](https://swagger.io/specification/#securitySchemeObject).
      * For basic-authentication you can use the default &id:oatpp::swagger::DocumentInfo::SecuritySchemeBuilder::DefaultBasicAuthorizationSecurityScheme;.
@@ -832,6 +865,7 @@ public:
       document->header = m_header;
       document->servers = m_servers;
       document->securitySchemes = m_securitySchemes;
+      document->tags = m_tags;
       return document;
     }
     
