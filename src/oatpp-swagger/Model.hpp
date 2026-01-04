@@ -306,6 +306,59 @@ struct SecurityScheme {
 };
 
 /**
+ * External Documentation object - https://swagger.io/specification/#external-documentation-object
+ */
+struct ExternalDocumentation {
+    /**
+     * Create shared ExternalDocumentation.
+     * @return - 'std::shared_ptr' to ExternalDocumentation.
+     */
+    static std::shared_ptr<ExternalDocumentation> createShared() {
+        return std::make_shared<ExternalDocumentation>();
+    }
+
+    /**
+     * Description.
+     */
+    String description;
+
+    /**
+     * url.
+     */
+    String url;
+
+};
+
+/**
+ * Tag object - https://swagger.io/specification/#tag-object
+ */
+struct Tag {
+    /**
+     * Create shared Tag.
+     * @return - 'std::shared_ptr' to Server.
+     */
+    static std::shared_ptr<Tag> createShared() {
+        return std::make_shared<Tag>();
+    }
+
+    /**
+     * Name.
+     */
+    String name;
+
+    /**
+     * Description.
+     */
+    String description;
+
+    /**
+     * External Documentation Link
+     */
+    std::shared_ptr<ExternalDocumentation> externalDocs;
+
+};
+
+/**
  * Document Info.
  */
 class DocumentInfo {
