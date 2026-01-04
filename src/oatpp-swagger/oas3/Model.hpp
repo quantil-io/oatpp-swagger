@@ -353,6 +353,41 @@ class Schema : public oatpp::DTO {
 };
 
 /**
+ * Tag
+ */
+class Tag : public oatpp::DTO {
+    DTO_INIT(Tag, DTO)
+
+    /**
+     * Name of tag.
+     */
+    DTO_FIELD(String, name);
+
+    /**
+     * Name of tag.
+     */
+    DTO_FIELD(String, displayName);
+
+    /**
+     * Summary.
+     */
+    DTO_FIELD(String, summary);
+
+
+    /**
+     * URL.
+     */
+    DTO_FIELD(String, url);
+
+    /**
+     * Link Name
+     */
+    DTO_FIELD(String, urlName);
+
+
+};
+
+/**
  * Example.
  */
 class Example : public oatpp::DTO {
@@ -646,7 +681,7 @@ class PathItemOperation : public oatpp::DTO {
   /**
    * List of tags.
    */
-  DTO_FIELD(List<String>, tags);
+  DTO_FIELD(List<Tag>, tags);
 
   /**
    * Map of &id:oatpp::String; to &l:OperationResponse;.
